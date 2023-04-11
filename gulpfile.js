@@ -4,7 +4,9 @@ const rename = require('gulp-rename')
 const plumber = require('gulp-plumber')
 const changed = require('gulp-changed')
 const del = require('del')
-
+const gulpif = require('gulp-if')
+const minimist = require('minimist')
+const argv = minimist(process.argv.slice(2))
 
 const originFolder = 'src'
 const outputFolder = 'weapp-dist'
@@ -33,6 +35,19 @@ globs.copy = [
   `${globs.wxml}`,
   `${globs.png}`,
 ]
+
+/**
+ * `gulp genPages --name 页面文件名`
+ * 生成页面文件
+ */
+const genPagesTask = series(
+  () => src('./pageTemplate/*')
+    .pipe(rename(path => {
+      path.basename = argv.fileName
+    }))
+    .pipe(dest(`${originFolder}/pages/${argv.fileName}`)),
+)
+
 
 // 包装 gulp.lastRun, 引入文件 ctime 作为文件变动判断另一标准
 // https://github.com/gulpjs/vinyl-fs/issues/226
@@ -156,4 +171,5 @@ module.exports = {
   build: buildTask,
   watch: watchTask,
   default: buildTask,
+  genPages: genPagesTask
 }

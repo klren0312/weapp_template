@@ -7,13 +7,17 @@
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-changed": "^4.0.3",
+    "gulp-if": "^3.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^5.0.0",
+    "minimist": "^1.2.8",
     "sass": "^1.45.1"
   },
   "scripts": {
     "watch": "gulp watch",
-    "build": "gulp"
-  }
+    "build": "gulp",
+    "genPages": "gulp genPages --fileName"
+  },
+  "dependencies": {}
 }
